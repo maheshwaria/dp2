@@ -1,0 +1,63 @@
+---
+title       : Predicting Stock Price
+subtitle    : Yes it's true Stock Price can be predicted
+author      : Data Product Student
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+---
+## New App to predict stock price
+
+### This App predicts stock price based on trading volume
+### Uses Linear Programming model 
+### Model is trained with historical data 
+### Model is verified to be working with test data
+### Free test version available
+http://maheshwaria.shinyapps.io/stockPrediction
+
+---
+
+## Building  model on training data
+
+```{r}
+pTr<-c(80.75,200.75,90.75,60.75,22.75,150.75,350.75,13.25,36.25,42.25,80.75,200.75,90.75,
+     60.75,22.75,150.75,350.75,13.25,36.25,42.25,80.75,200.75,90.75,60.75,22.75,150.75,
+     350.75,13.25,36.25,42.25)
+vTr<-c(160,401,180,120,44,300,700,25,71,83,161,400,180,120,44,300,700,25,71,83,160,400,
+     180,120,44,301,701,25,71,83)
+fit<-lm(pTr~vTr)
+fit
+```
+
+---
+## Review the model
+```{r}
+plot(vTr,pTr,pch=24,col="red",xlab="Trading Volume",ylab="Stock Price")
+lines(vTr,fit$fitted,lwd=3)
+```
+
+--- 
+
+## Lets Predict
+
+```{r}
+pTest<-c(88.29,43.9,46.3,351,451); vTest<-c(175,86,91,700,900)
+round(predict(fit,data.frame(vTr=vTest)),2)
+```
+### Lets compare training and test set errors 
+```{r}
+sqrt(sum((fit$fitted-pTr)^2)); sqrt(sum((predict(fit,data.frame(vTr=vTest))-pTest)^2))
+
+```
+
+### (Our model worked better on test data.)
+
+
+
+
+

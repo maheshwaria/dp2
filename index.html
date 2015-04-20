@@ -1,1 +1,180 @@
-default
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predicting Stock Price</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Predicting Stock Price">
+  <meta name="author" content="Data Product Student">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Predicting Stock Price</h1>
+    <h2>Yes it's true Stock Price can be predicted</h2>
+    <p>Data Product Student<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>New App to predict stock price</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>This App predicts stock price based on trading volume</h3>
+
+<h3>Uses Linear Programming model</h3>
+
+<h3>Model is trained with historical data</h3>
+
+<h3>Model is verified to be working with test data</h3>
+
+<h3>Free test version available</h3>
+
+<p><a href="http://maheshwaria.shinyapps.io/stockPrediction">http://maheshwaria.shinyapps.io/stockPrediction</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Building  model on training data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">pTr&lt;-c(80.75,200.75,90.75,60.75,22.75,150.75,350.75,13.25,36.25,42.25,80.75,200.75,90.75,
+     60.75,22.75,150.75,350.75,13.25,36.25,42.25,80.75,200.75,90.75,60.75,22.75,150.75,
+     350.75,13.25,36.25,42.25)
+vTr&lt;-c(160,401,180,120,44,300,700,25,71,83,161,400,180,120,44,300,700,25,71,83,160,400,
+     180,120,44,301,701,25,71,83)
+fit&lt;-lm(pTr~vTr)
+fit
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = pTr ~ vTr)
+## 
+## Coefficients:
+## (Intercept)          vTr  
+##      0.7478       0.4997
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Review the model</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plot(vTr,pTr,pch=24,col=&quot;red&quot;,xlab=&quot;Trading Volume&quot;,ylab=&quot;Stock Price&quot;)
+lines(vTr,fit$fitted,lwd=3)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Lets Predict</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">pTest&lt;-c(88.29,43.9,46.3,351,451); vTest&lt;-c(175,86,91,700,900)
+round(predict(fit,data.frame(vTr=vTest)),2)
+</code></pre>
+
+<pre><code>##      1      2      3      4      5 
+##  88.19  43.72  46.22 350.53 450.47
+</code></pre>
+
+<h3>Lets compare training and test set errors</h3>
+
+<pre><code class="r">sqrt(sum((fit$fitted-pTr)^2)); sqrt(sum((predict(fit,data.frame(vTr=vTest))-pTest)^2))
+</code></pre>
+
+<pre><code>## [1] 0.8681739
+</code></pre>
+
+<pre><code>## [1] 0.7408832
+</code></pre>
+
+<h3>(Our model worked better on test data.)</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='New App to predict stock price'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Building  model on training data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Review the model'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Lets Predict'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
